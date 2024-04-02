@@ -40,12 +40,36 @@ build/Release
 
 # Dependency directories
 node_modules/
-jspm_packages/
 
-# Snowpack dependency directory (https://snowpack.dev/)
-web_modules/
+# Expo
+.expo/
+dist/
+web-build/
 
-# TypeScript cache
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
 *.tsbuildinfo
 
 # Optional npm cache directory
