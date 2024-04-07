@@ -24,6 +24,7 @@ export const Welcome = () => {
         <CustomButton 
           text={'Cadastrar'} 
           color={'#6A9F7A'}
+          onPress={()=> navigation.navigate('Register')}
         />
       </CustomContainer>
     </View>

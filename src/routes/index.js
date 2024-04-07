@@ -4,6 +4,8 @@ import { PreLoader } from '../screens/PreLoader/index'
 import {Welcome} from '../screens/Welcome/index'
 import {Login} from '../screens/Login/index'
 import {Register} from '../screens/Register/index'
+import {Main} from '../screens/Main/index'
+import {Marcador} from '../screens/Marcador/index'
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +30,17 @@ export default function Routes(){
             <Stack.Screen
                 name="Register"
                 component={Register}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}
-                
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+            />
+            <Stack.Screen
+                name="Main"
+                component={Main}
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+            />
+            <Stack.Screen
+                name="Marcador"
+                component={Marcador}
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
             />
         </Stack.Navigator>
     )

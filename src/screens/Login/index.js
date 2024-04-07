@@ -32,7 +32,7 @@ export const Login = () => {
             <CustomButton 
               text={'Login'} 
               color={'#054A18'}
-              onPress={()=> navigation.navigate('')}
+              onPress={()=> navigation.navigate('Main')}
             />
       </CustomContainer>
     </View>
