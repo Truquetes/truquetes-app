@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, useWindowDimensions  } from 'react-native';
 
 const CustomContainer = ({ children, height }) => {
     return (
@@ -20,11 +20,13 @@ const ContainerWithBackground = ({ children, height }) => {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: 'green', // Cor de fundo para a área fora do container
+        backgroundColor: '#054A18', // Cor de fundo para a área fora do container
+        justifyContent:'flex-start',
+        alignItems:'flex-start'
     },
     container: {
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
         backgroundColor: '#C0C0C0',
         padding: 20,
         paddingTop: 100, // Espaço para a parte superior arredondada
