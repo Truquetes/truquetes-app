@@ -6,7 +6,7 @@ const Logo = ({ height, width }) => {
     <View style={[styles.container, { height: height , width: width }]}>
       <Image 
         source={require('../assets/Logo.png')}
-        style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'cover' }}
+        style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'contain' }}
       />
     </View>
   );

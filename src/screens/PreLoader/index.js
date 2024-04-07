@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Logo } from '../../components/Logo';
 
 export const PreLoader = () => {
-  const screenWidth = Dimensions.get('window').width;
+  //const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   useEffect(() => {
     const timer = setTimeout(() => {

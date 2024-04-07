@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, height}) => {
+const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, height, style}) => {
   const [text, setText] = useState('');
 
   return (
@@ -27,16 +27,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: 'black',
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 10,
+    backgroundColor: '#AFD1B7'
   },
   input: {
     flex: 1,
     paddingHorizontal: 10,
     fontSize: 16,
     color: 'black',
+    backgroundColor: '#AFD1B7'
   },
   icon: {
     marginRight: 5,

@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 50,
         backgroundColor: '#C0C0C0',
         padding: 20,
-        paddingTop: 100, // Espaço para a parte superior arredondada
         position: 'absolute',
         bottom: 0,
         left: 0,
