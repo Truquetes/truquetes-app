@@ -6,6 +6,7 @@ import {Login} from '../screens/Login/index'
 import {Register} from '../screens/Register/index'
 import {Main} from '../screens/Main/index'
 import {Marcador} from '../screens/Marcador/index'
+import {Statistic} from '../screens/Statistic/index'
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,11 @@ export default function Routes(){
             <Stack.Screen
                 name="Marcador"
                 component={Marcador}
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+            />
+            <Stack.Screen
+                name="Statistic"
+                component={Statistic}
                 options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
             />
         </Stack.Navigator>
