@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, height, style}) => {
+const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, height, style, onChangeText}) => {
   const [text, setText] = useState('');
+
+  const handleChangeText = (newText) => {
+    setText(newText); // Atualiza o estado interno do texto
+    if (onChangeText) {
+      onChangeText(newText); // Chama a função passada como prop, se existir
+    }
+  };
 
   return (
     <View style={[styles.container, { width: width }, {height: height}]}>
@@ -11,7 +18,7 @@ const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, heig
       
       <TextInput
         style={styles.input}
-        onChangeText={setText}
+        onChangeText={handleChangeText}
         value={text}
         placeholder={placeholder}
         placeholderTextColor="gray"

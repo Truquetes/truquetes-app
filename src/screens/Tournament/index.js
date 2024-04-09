@@ -1,0 +1,133 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { CustomContainer } from '../../components/CustomContainer'
+import { Logo } from '../../components/Logo';
+import { TeamSelection } from '../../components/TeamSelection';
+import { CustomTextInput } from '../../components/CustomTextInput';
+import { CustomButton } from '../../components/CustomButton';
+
+export const Tournament = () => {
+    const screenWidth = Dimensions.get('window').width;
+    const [numberOfTeams, setNumberOfTeams] = useState(0);
+    const [teams, setTeams] = useState([]);
+
+    const generateTeams = () => {
+        const generatedTeams = [];
+        console.log("Número de equipes:", numberOfTeams);
+        for (let i = 1; i <= numberOfTeams; i++) {
+            generatedTeams.push(`Equipe #${i}`);
+        }
+        setTeams(generatedTeams);
+        console.log("Equipes geradas:", generatedTeams);
+    };
+
+    const handleTeamClick = (teamName) => {
+        // Aqui vai abrir um componente ou modal para inserir os nomes dos participantes
+        alert(`Aqui vai ser adicionado um componente ou modal para inserir os nomes dos jogadores ${teamName}`);
+    };
+    
+    return(
+        <View style={styles.container}>
+            <View style={styles.topContent}>
+                <Text style={styles.textLogo}>Truquetes</Text>
+                <Logo height={20} width={screenWidth} />
+            </View>
+            
+            <View style={styles.centerContent}>
+                <Text style={styles.textTournament}>Torneio</Text>
+            </View>
+            
+            <CustomContainer height="90%">
+                <Text style={styles.textTeams}> Configuração dos times </Text>
+
+                <View style={styles.teamSelectionContainer}>
+                    <TeamSelection />
+                    
+                    <View style={styles.customTextInputContainer}>
+                        <Text style={styles.textTeamNumbers}> Número de equipes </Text>
+                        <CustomTextInput 
+                            width={65}
+                            onChangeText={(text) => {
+                                console.log("Valor digitado:", text); // Verifica se o valor digitado está correto
+                                setNumberOfTeams(parseInt(text));
+                            }}
+                            keyboardType="numeric"
+                        />
+                    </View>
+                </View>
+
+                <CustomButton
+                    backgroundColor={'green'}
+                    text={'Gerar equipes'}
+                    color={'black'}
+                    onPress={generateTeams}
+                />
+
+                {teams.map((team, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleTeamClick(team)}>
+                        <Text style={styles.teamText}>{team}</Text>
+                    </TouchableOpacity>
+                ))}
+
+            </CustomContainer>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#054A18', 
+    },
+    topContent: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    centerContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    textLogo: {
+        textAlign: 'center', 
+        color: 'white', 
+        fontSize: 20, 
+    },
+    textTournament: {
+        fontSize:35,
+        color: 'white',
+        alignItems: 'center',
+        textAlign: 'center',
+    }, 
+    textTeams: {
+        fontSize:20,
+        fontWeight: "bold",
+        color: 'black',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    textTeamNumbers: {
+        fontSize: 18,
+        color: 'black',
+    },
+    teamSelectionContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    customTextInputContainer: {
+        flex: 1,
+        marginLeft: 10,
+        alignItems: 'center', 
+    },
+    teamText: {
+        fontSize: 16,
+        color: 'black',
+        marginVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        backgroundColor: '#E5E5E5',
+        borderRadius: 5,
+    },
+});
