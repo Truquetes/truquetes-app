@@ -26,7 +26,7 @@ export const Main = () => {
       <CustomContainer height="90%">
         <ImageButton imageSource={require('../../assets/Ouro.png')} buttonText='Iniciar novo jogo' onPress={()=> navigation.navigate('Marcador')}/>
         <ImageButton imageSource={require('../../assets/Copa.png')} buttonText='Estatísticas' onPress={()=> navigation.navigate('Statistic')}/>
-        <ImageButton imageSource={require('../../assets/Espada.png')} buttonText='Histórico de Jogos'/>
+        <ImageButton imageSource={require('../../assets/Espada.png')} buttonText='Histórico de Jogos' onPress={()=> navigation.navigate('GameHistory')}/>
         <ImageButton imageSource={require('../../assets/Pau.png')} buttonText='Torneio' onPress={()=> navigation.navigate('Tournament')}/>
       </CustomContainer>
     </View>

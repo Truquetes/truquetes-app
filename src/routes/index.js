@@ -8,6 +8,7 @@ import {Main} from '../screens/Main/index'
 import {Marcador} from '../screens/Marcador/index'
 import {Statistic} from '../screens/Statistic/index'
 import {Tournament} from '../screens/Tournament/index'
+import {GameHistory} from '../screens/GameHistory/index'
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,11 @@ export default function Routes(){
             <Stack.Screen
                 name="Tournament"
                 component={Tournament}
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+            />
+            <Stack.Screen
+                name="GameHistory"
+                component={GameHistory}
                 options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
             />
         </Stack.Navigator>
