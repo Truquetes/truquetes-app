@@ -18,10 +18,20 @@ export const GameHistory = () => {
             </View>
 
             <CustomContainer height="90%"> 
+            <View style={styles.textInfo}>
+                <Text style={styles.textInfo}>Jogadores</Text>
+                <Text style={styles.textInfo}>Placar</Text>
+                <Text style={styles.textInfo}>Data/Hora</Text>
                 
-            </CustomContainer>
+            </View>
+            <View style={styles.textResultV}>
+                <Text style={styles.textResultV}>Jairo & Jogador2</Text>
+                <Text style={styles.textResultV}>3</Text>
+                <Text style={styles.textResultV}>14/03/2024</Text>
+            </View>
 
-        </View>
+            </CustomContainer>
+         </View>
     )
 }
 
@@ -49,6 +59,21 @@ const styles = StyleSheet.create({
         color: 'white',
         alignItems: 'center',
         textAlign: 'center',
+        
     }, 
-    
+    textInfo: {
+        fontSize: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color:'black',
+    },
+    textResultV: {
+        fontSize: 12,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color:'black',
+    },
+
 });
