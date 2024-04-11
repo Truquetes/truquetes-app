@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
 import { CustomContainer } from '../../components/CustomContainer'
 import { Logo } from '../../components/Logo';
 import { TeamSelection } from '../../components/TeamSelection';
 import { CustomTextInput } from '../../components/CustomTextInput';
 import { CustomButton } from '../../components/CustomButton';
+import { useNavigation } from '@react-navigation/native';
 
 export const Tournament = () => {
     const screenWidth = Dimensions.get('window').width;
+    const navigation = useNavigation();
     const [numberOfTeams, setNumberOfTeams] = useState(0);
     const [teams, setTeams] = useState([]);
 
@@ -24,6 +26,10 @@ export const Tournament = () => {
     const handleTeamClick = (teamName) => {
         // Aqui vai abrir um componente ou modal para inserir os nomes dos participantes
         alert(`Aqui vai ser adicionado um componente ou modal para inserir os nomes dos jogadores ${teamName}`);
+    };
+
+    const navigateToShuffling = () => {
+        navigation.navigate('Shuffling', { teams }); // Navega para a tela de chaveamento
     };
     
     return(
@@ -63,11 +69,20 @@ export const Tournament = () => {
                     onPress={generateTeams}
                 />
 
-                {teams.map((team, index) => (
-                    <TouchableOpacity key={index} onPress={() => handleTeamClick(team)}>
-                        <Text style={styles.teamText}>{team}</Text>
-                    </TouchableOpacity>
-                ))}
+                <ScrollView>
+                    {teams.map((team, index) => (
+                        <TouchableOpacity key={index} onPress={() => handleTeamClick(team)}>
+                            <Text style={styles.teamText}>{team}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+                <CustomButton
+                    backgroundColor={'green'}
+                    text={'Gerar chaveamento'}
+                    color={'black'}
+                    onPress={navigateToShuffling}
+                />
 
             </CustomContainer>
         </View>
@@ -127,7 +142,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         paddingHorizontal: 10,
         paddingVertical: 8,
-        backgroundColor: '#E5E5E5',
+        backgroundColor: '#AFD1B7',
         borderRadius: 5,
     },
 });

@@ -1,6 +1,6 @@
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import { PreLoader } from '../screens/PreLoader/index'
+import {PreLoader} from '../screens/PreLoader/index'
 import {Welcome} from '../screens/Welcome/index'
 import {Login} from '../screens/Login/index'
 import {Register} from '../screens/Register/index'
@@ -9,6 +9,7 @@ import {Marcador} from '../screens/Marcador/index'
 import {Statistic} from '../screens/Statistic/index'
 import {Tournament} from '../screens/Tournament/index'
 import {GameHistory} from '../screens/GameHistory/index'
+import {Shuffling} from '../screens/Shuffling/index'
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,11 @@ export default function Routes(){
             <Stack.Screen
                 name="GameHistory"
                 component={GameHistory}
+                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+            />
+            <Stack.Screen
+                name="Shuffling"
+                component={Shuffling}
                 options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
             />
         </Stack.Navigator>
