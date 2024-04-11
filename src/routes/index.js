@@ -1,4 +1,4 @@
-import { createNativeStackNavigator} from '@react-navigation/native-stack'
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {PreLoader} from '../screens/PreLoader/index'
 import {Welcome} from '../screens/Welcome/index'
@@ -11,60 +11,60 @@ import {Tournament} from '../screens/Tournament/index'
 import {GameHistory} from '../screens/GameHistory/index'
 import {Shuffling} from '../screens/Shuffling/index'
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function Routes(){
-    return(
+    return (
         <Stack.Navigator>
             <Stack.Screen
                 name="PreLoader"
                 component={PreLoader}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Welcome"
                 component={Welcome}
-                options={{headerShown: false, headerLeft: null}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Login"
                 component={Login}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Register"
                 component={Register}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Main"
                 component={Main}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Marcador"
                 component={Marcador}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Statistic"
                 component={Statistic}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Tournament"
                 component={Tournament}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="GameHistory"
                 component={GameHistory}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Shuffling"
                 component={Shuffling}
-                options={{headerShown: false, gestureEnabled: false, gestureDirection: 'horizontal'}}                
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     )
