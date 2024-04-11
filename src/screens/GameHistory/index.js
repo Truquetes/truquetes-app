@@ -24,12 +24,6 @@ export const GameHistory = () => {
                 <Text style={styles.textInfo}>Data/Hora</Text>
                 
             </View>
-            <View style={styles.textResultV}>
-                <Text style={styles.textResultV}>Jairo & Jogador2</Text>
-                <Text style={styles.textResultV}>3</Text>
-                <Text style={styles.textResultV}>14/03/2024</Text>
-            </View>
-
             </CustomContainer>
          </View>
     )
@@ -74,6 +68,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         color:'black',
+        
     },
 
 });
