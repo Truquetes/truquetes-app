@@ -1,39 +1,41 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { CustomContainer } from '../../components/CustomContainer'
-import { Logo } from '../../components/Logo';
+import { Header } from '../../components/Header';
 import { CustomButton } from '../../components/CustomButton';
 import {CustomTextInput} from '../../components/CustomTextInput'
 import { useNavigation } from '@react-navigation/native';
 
-
 export const Login = () => {
-  const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
+  
   return (
     <View style={styles.container}>
-          <Text style={[styles.textLogo, styles.topContent]}>Truquetes</Text>
-          <Logo height={200} width={screenWidth} style={styles.topContent}/>
+          
+          <Header />
+
           <CustomContainer height="90%">
-            <Text style={[styles.textTexto,]}>
-            Logar
+            <Text style={styles.textTexto}>
+              Logar
             </Text>
+            
             <CustomTextInput
               placeholder={'seuEmail@email.com'}
-            >
+              height={35}
+            />
 
-            </CustomTextInput>
             <CustomTextInput
-              style={[styles.Input]}
               placeholder={'password'}
-            >
+              height={35}
+            />
 
-            </CustomTextInput>
             <CustomButton 
               text={'Login'} 
-              color={'#054A18'}
+              backgroundColor='green'
+              color={'black'}
               onPress={()=> navigation.navigate('Main')}
             />
+
       </CustomContainer>
     </View>
   )
@@ -43,16 +45,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#054A18', 
-  },
-  textLogo: {
-    textAlign: 'center', 
-    textAlignVertical: 'center', 
-    color: 'white', 
-    fontSize: 45, 
-  },
-  topContent: {
-    marginTop: 100, 
-    alignItems: 'center',
   },
   textTexto: {
     textAlign: 'left',
@@ -64,8 +56,4 @@ const styles = StyleSheet.create({
     maxHeight: 300,
     paddingBottom: 50
   },
-  Input:{
-    marginTop:100,
-    marginBottom:100
-  }
 });
