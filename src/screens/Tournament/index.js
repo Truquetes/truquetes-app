@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { CustomContainer } from '../../components/CustomContainer'
-import { Logo } from '../../components/Logo';
+import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { TeamSelection } from '../../components/TeamSelection';
 import { CustomTextInput } from '../../components/CustomTextInput';
 import { CustomButton } from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 
 export const Tournament = () => {
-    const screenWidth = Dimensions.get('window').width;
     const navigation = useNavigation();
     const [numberOfTeams, setNumberOfTeams] = useState(0);
     const [teams, setTeams] = useState([]);
@@ -34,10 +33,8 @@ export const Tournament = () => {
     
     return(
         <View style={styles.container}>
-            <View style={styles.topContent}>
-                <Text style={styles.textLogo}>Truquetes</Text>
-                <Logo height={20} width={screenWidth} />
-            </View>
+            
+            <SecondaryHeader />
             
             <View style={styles.centerContent}>
                 <Text style={styles.textTournament}>Torneio</Text>
@@ -94,19 +91,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#054A18', 
     },
-    topContent: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
     centerContent: {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20,
-    },
-    textLogo: {
-        textAlign: 'center', 
-        color: 'white', 
-        fontSize: 20, 
     },
     textTournament: {
         fontSize:35,

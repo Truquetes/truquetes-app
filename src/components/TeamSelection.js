@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     },
     radioContainer: {
         borderWidth: 1, 
+        backgroundColor:'#D9D9D9',
         borderColor: 'black', 
         borderRadius: 10,
         maxHeight: 90,

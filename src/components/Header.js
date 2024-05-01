@@ -14,10 +14,6 @@ const Header = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#054A18', 
-    },
     textLogo: {
         textAlign: 'center', 
         textAlignVertical: 'center', 

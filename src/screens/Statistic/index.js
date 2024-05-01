@@ -1,17 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { CustomContainer } from '../../components/CustomContainer'
-import { Logo } from '../../components/Logo';
+import { SecondaryHeader } from '../../components/SecondaryHeader';
 
 export const Statistic = () => {
-    const screenWidth = Dimensions.get('window').width; 
 
     return(
         <View style={styles.container}>
-            <View style={styles.topContent}>
-                <Text style={styles.textLogo}>Truquetes</Text>
-                <Logo height={20} width={screenWidth} />
-            </View>
+            
+            <SecondaryHeader />
             
             <View style={styles.centerContent}>
                 <Text style={styles.textStatistic}>Estatísticas</Text>
@@ -59,19 +56,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#054A18', 
     },
-    topContent: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
     centerContent: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
-    },
-    textLogo: {
-        textAlign: 'center', 
-        color: 'white', 
-        fontSize: 20, 
+        marginTop: 50,
     },
     textStatistic: {
         fontSize:35,
@@ -106,6 +94,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     lastTableCell: {
-        borderBottomWidth: 0, // Remove a borda inferior da última célula
+        borderBottomWidth: 0, 
     },
 });
