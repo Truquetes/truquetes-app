@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { CustomContainer } from '../../components/CustomContainer'
 import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { ImageButton } from '../../components/ImageButton';
 import { useNavigation } from '@react-navigation/native';
+import { db } from '../../database/firebaseConnection';
 
 export const Main = () => {
   const navigation = useNavigation();
+  const [nome, setNome] = useState('carregando...')
+
+  useEffect(() => {
+
+    async function getNome() {
+      await db.ref("users/name").on('value', (snapshot) => {
+        setNome(snapshot.val());
+      }) 
+    }
+
+    getNome();
+
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -19,7 +33,7 @@ export const Main = () => {
           <Image source={require('../../assets/Avatar.jpg')} style={styles.imagem} />
         </View>
 
-        <Text style={styles.textAvatar}>Bem Vindo Jairo</Text>
+        <Text style={styles.textAvatar}>Bem Vindo {nome}</Text>
 
       </View>
 
