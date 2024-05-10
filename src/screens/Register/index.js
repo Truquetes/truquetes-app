@@ -77,7 +77,6 @@ export const Register = () => {
           placeholder={'seuEmail@email.com'}
           height={35}
           onChangeText={(text) => setEmail(text)}
-
         />
 
         <CustomTextInput
