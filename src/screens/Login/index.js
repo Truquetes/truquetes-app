@@ -29,11 +29,15 @@ export const Login = () => {
         case 'auth/user-not-found':
           alert('Usuário não encontrado.');
           break;
+        case 'auth/internal-error':
+          alert('As credenciais informadas são inválidas. Por favor, verifique e tente novamente.');
+          break;
         case 'auth/wrong-password':
           alert('Senha incorreta.');
           break;
         default:
           alert('Ocorreu um erro durante o login. Por favor, tente novamente.');
+          console.log(error.code)
           break;
       }
     })
