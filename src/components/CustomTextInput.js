@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, height, style, onChangeText}) => {
+const CustomTextInput = ({ height, leftIconName, onChangeText, placeholder, rightIconName, secureTextEntry, width }) => {
   const [text, setText] = useState('');
 
   const handleChangeText = (newText) => {
@@ -22,6 +22,7 @@ const CustomTextInput = ({ leftIconName, rightIconName, placeholder, width, heig
         value={text}
         placeholder={placeholder}
         placeholderTextColor="gray"
+        secureTextEntry={secureTextEntry}
       />
       
       {rightIconName && <Ionicons name={rightIconName} size={24} color="black" style={styles.icon} />}
