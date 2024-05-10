@@ -9,32 +9,54 @@ export const Marcador = () => {
   const [numPlayers, setNumPlayers] = useState(4);
   const [scoreUs, setScoreUs] = useState(0);
   const [scoreThem, setScoreThem] = useState(0);
+  const [trucoValue, setTrucoValue] = useState(1);
   const [buttonText, setButtonText] = useState('Truco!');
   const [buttonClicks, setButtonClicks] = useState(0);
+;
 
-  const handleTrucoButtonClick = () => {
-    setButtonClicks(buttonClicks + 1);
-    if (buttonClicks % 3 === 0) {
-        setButtonText('Seis!');
-    } else if (buttonClicks % 3 === 1) {
-        setButtonText('Nove!');
-    } else {
-        setButtonText('Doze!');
-    }
-  };
 
   const handleTeamSelection = (option) => {
     console.log('A OPÇÃO AQUI É '+ option)
       setNumPlayers(option === 'S' ? 2 : 4);
   };
 
-  const increaseScore = (team) => {
-    if (team === 'us' && scoreUs != 12) {
-      setScoreUs(scoreUs + 1);
-    } else if (team === 'them' && scoreThem != 12) {
-        setScoreThem(scoreThem + 1);
+  const handleTrucoButtonClick = () => {
+    setButtonClicks(buttonClicks + 1);
+    if (buttonClicks === 0) {
+      setButtonText('SEIS Poca Foia!');
+      setTrucoValue(3);
+    } else if (buttonClicks  === 1) {
+      setButtonText('NOVE Fancãozeiro!');
+      setTrucoValue(6);
+    } else if (buttonClicks === 2) {
+      setButtonText('Doze Portão de cemitério!');
+      setTrucoValue(9);
+    } else if (buttonClicks === 3) {
+      setTrucoValue(12);
+    } else if (buttonClicks === 4) {
+      setButtonText('TRUCO');
+      setTrucoValue(1);
+      setButtonClicks(0);
     }
-  }
+  };
+
+  const increaseScore = (team) => {
+    let trucoScore;
+    if (trucoValue >= 3) {
+      trucoScore = trucoValue;
+      setButtonText('TRUCO');
+      setTrucoValue(1);
+      setButtonClicks(0);
+    } else {
+      trucoScore = 1;
+    }
+
+    if (team === 'us' && scoreUs < 12) {
+        setScoreUs(Math.min(scoreUs + trucoScore, 12));
+    } else if (team === 'them' && scoreThem < 12) {
+        setScoreThem(Math.min(scoreThem + trucoScore, 12));
+    }
+}
 
   const decreaseScore = (team) => {
     if (team === 'us' && scoreUs != 0) {
@@ -89,7 +111,7 @@ export const Marcador = () => {
                 >
                     <Image source={require('../../assets/Ouro.png')} style={styles.image} />
                     <View style={styles.textContainer}>
-                        <Text style={styles.textP}>{'+1'}</Text>
+                        <Text style={styles.textP}>{'+' + trucoValue}</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -99,7 +121,7 @@ export const Marcador = () => {
                 >
                     <Image source={require('../../assets/Ouro.png')} style={styles.image} />
                     <View style={styles.textContainer}>
-                        <Text style={styles.textP}>{'+1'}</Text>
+                        <Text style={styles.textP}>{'+' + trucoValue}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
