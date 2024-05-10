@@ -11,6 +11,7 @@ const TeamSelection = ({}) => {
                         { label: 'Solo', value: 'S' },
                         { label: 'Dupla', value: 'D' },
                     ]}
+                    defaultOption='D'
                     onSelect={(option) => console.log('Opção selecionada:', option)}
                 />
             </View>

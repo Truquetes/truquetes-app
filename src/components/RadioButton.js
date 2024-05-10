@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const RadioButton = ({ options, onSelect }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const RadioButton = ({ defaultOption, options, onSelect }) => {
+  const [selectedOption, setSelectedOption] = useState(defaultOption);
+
+  useEffect(() => {
+    onSelect(selectedOption);
+  }, [selectedOption, onSelect]);
 
   const handleSelect = (option) => {
-    setSelectedOption(option);
-    onSelect(option);
-  };
+    setSelectedOption(option.value);
+  }
 
   return (
     <View>
@@ -19,7 +22,7 @@ const RadioButton = ({ options, onSelect }) => {
           onPress={() => handleSelect(option)}
         >
           <Ionicons
-            name={selectedOption === option ? 'radio-button-on' : 'radio-button-off'}
+            name={selectedOption === option.value ? 'radio-button-on' : 'radio-button-off'}
             size={24}
             color="black"
           />
