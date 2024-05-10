@@ -3,21 +3,59 @@ import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { CustomTextInput } from '../../components/CustomTextInput'
 import { CustomButton } from '../../components/CustomButton'
 import { TeamSelection } from '../../components/TeamSelection'
+import { useState } from 'react';
 
 export const Marcador = () => {
+  const [numPlayers, setNumPlayers] = useState(4);
+  const [scoreUs, setScoreUs] = useState(0);
+  const [scoreThem, setScoreThem] = useState(0);
+  const [buttonText, setButtonText] = useState('Truco!');
+  const [buttonClicks, setButtonClicks] = useState(0);
+
+  const handleTrucoButtonClick = () => {
+    setButtonClicks(buttonClicks + 1);
+    if (buttonClicks % 3 === 0) {
+        setButtonText('Seis!');
+    } else if (buttonClicks % 3 === 1) {
+        setButtonText('Nove!');
+    } else {
+        setButtonText('Doze!');
+    }
+  };
+
+  const handleTeamSelection = (option) => {
+    console.log('A OPÇÃO AQUI É '+ option)
+      setNumPlayers(option === 'S' ? 2 : 4);
+  };
+
+  const increaseScore = (team) => {
+    if (team === 'us' && scoreUs != 12) {
+      setScoreUs(scoreUs + 1);
+    } else if (team === 'them' && scoreThem != 12) {
+        setScoreThem(scoreThem + 1);
+    }
+  }
+
+  const decreaseScore = (team) => {
+    if (team === 'us' && scoreUs != 0) {
+      setScoreUs(scoreUs - 1);
+    } else if (team === 'them' && scoreThem != 0) {
+        setScoreThem(scoreThem - 1);
+    }
+  };
 
     return (
         <View style={styles.container}>
             <SecondaryHeader />
 
             <View style={styles.viewRbInput}>
-                <TeamSelection />
+              <TeamSelection onSelect={handleTeamSelection} />
 
-                <View style={styles.viewInput}>
-                    <CustomTextInput placeholder={'jogador2'}></CustomTextInput>
-                    <CustomTextInput placeholder={'jogador3'}></CustomTextInput>
-                    <CustomTextInput placeholder={'jogador4'}></CustomTextInput>
-                </View>
+              <View style={styles.viewInput}>
+                  {[...Array(numPlayers)].map((_, index) => (
+                      <CustomTextInput key={index} placeholder={`jogador${index + 1}`} />
+                  ))}
+              </View>
             </View>
 
             <View style={styles.marcadorView}>
@@ -26,40 +64,51 @@ export const Marcador = () => {
             </View>
 
             <View style={styles.marcadorPontos}>
-                <TouchableOpacity style={styles.buttonMenos}>
+                <TouchableOpacity 
+                  style={styles.buttonMenos}
+                  onPress={() => decreaseScore('us')}
+                >
                     <Text style={styles.text}>-</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.textPontos}>0</Text>
-                <Text style={styles.textPontos}>0</Text>
+                <Text style={styles.textPontos}>{scoreUs}</Text>
+                <Text style={styles.textPontos}>{scoreThem}</Text>
                 
-                <TouchableOpacity style={styles.buttonMenos}>
+                <TouchableOpacity 
+                  style={styles.buttonMenos}
+                  onPress={() => decreaseScore('them')}
+                >
                     <Text style={styles.text}>-</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.botoesAd}>
-                <TouchableOpacity style={styles.containerB}>
+                <TouchableOpacity 
+                  style={styles.containerB}
+                  onPress={() => increaseScore('us')}
+                >
                     <Image source={require('../../assets/Ouro.png')} style={styles.image} />
                     <View style={styles.textContainer}>
                         <Text style={styles.textP}>{'+1'}</Text>
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.containerB}>
+                <TouchableOpacity 
+                  style={styles.containerB}
+                  onPress={() => increaseScore('them')}
+                >
                     <Image source={require('../../assets/Ouro.png')} style={styles.image} />
                     <View style={styles.textContainer}>
                         <Text style={styles.textP}>{'+1'}</Text>
                     </View>
                 </TouchableOpacity>
-
             </View>
 
             <CustomButton  
               backgroundColor='#AFD1B7'
               color='black' 
-              text='Truco!' 
-              onPress={() => {}} 
+              text={buttonText}
+              onPress={handleTrucoButtonClick}
             />
             
             <View style={styles.vitoria}>
@@ -107,7 +156,7 @@ const styles = StyleSheet.create({
     color:'white'
   },
   marcadorView:{
-    margin:15,
+    //margin:15,
     flexDirection: 'row',
     justifyContent: 'space-around',
     color:'white'
@@ -123,7 +172,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: 'white', 
     fontWeight:'500',
-    fontSize: 100,
+    fontSize: 90,
   },
   buttonMenos:{
     width: 40,

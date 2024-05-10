@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RadioButton } from './RadioButton';
 import { View, StyleSheet  } from 'react-native';
 
-const TeamSelection = ({}) => {
+const TeamSelection = ({onSelect}) => {
     return (
         <View style={styles.container}>
             <View style={styles.radioContainer}>
@@ -12,7 +12,7 @@ const TeamSelection = ({}) => {
                         { label: 'Dupla', value: 'D' },
                     ]}
                     defaultOption='D'
-                    onSelect={(option) => console.log('Opção selecionada:', option)}
+                    onSelect={onSelect}
                 />
             </View>
         </View>
