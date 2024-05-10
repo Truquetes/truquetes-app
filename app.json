@@ -13,6 +13,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "br.com.truquetes",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
