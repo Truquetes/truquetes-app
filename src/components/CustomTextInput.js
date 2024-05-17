@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const CustomTextInput = ({ height, leftIconName, onChangeText, placeholder, rightIconName, secureTextEntry, width }) => {
-  const [text, setText] = useState('');
+const CustomTextInput = ({ height, leftIconName, onChangeText, placeholder, rightIconName, secureTextEntry, value, width }) => {
+  const [text, setText] = useState(value || '');
+
+  useEffect(() => {
+    setText(value); // Atualiza o estado interno se o valor inicial mudar
+  }, [value]);
 
   const handleChangeText = (newText) => {
     setText(newText); // Atualiza o estado interno do texto

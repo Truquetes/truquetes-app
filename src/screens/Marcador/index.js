@@ -1,9 +1,11 @@
-import { Modal, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { CustomTextInput } from '../../components/CustomTextInput'
 import { CustomButton } from '../../components/CustomButton'
 import { TeamSelection } from '../../components/TeamSelection'
-import { useState } from 'react';
+import { SaveGameModal } from '../../components/SaveGameModal'
+import { getNomeUsuario } from '../../utils/userService';
 
 export const Marcador = () => {
   const [numPlayers, setNumPlayers] = useState(4);
@@ -15,12 +17,14 @@ export const Marcador = () => {
   const [buttonText, setButtonText] = useState('Truco!');
   const [buttonClicks, setButtonClicks] = useState(0);
   const [showModal, setShowModal] = useState(false);
-;
+  const [nome, setNome] = useState('carregando...')
 
+  useEffect(() => {
+    getNomeUsuario(setNome)
+  }, [])
 
   const handleTeamSelection = (option) => {
-    console.log('A OPÇÃO AQUI É '+ option)
-      setNumPlayers(option === 'S' ? 2 : 4);
+    setNumPlayers(option === 'S' ? 2 : 4);
   };
 
   const handleTrucoButtonClick = () => {
@@ -29,7 +33,7 @@ export const Marcador = () => {
       setButtonText('SEIS Poca Foia!');
       setTrucoValue(3);
     } else if (buttonClicks  === 1) {
-      setButtonText('NOVE Fancãozeiro!');
+      setButtonText('NOVE Facãozeiro!');
       setTrucoValue(6);
     } else if (buttonClicks === 2) {
       setButtonText('Doze Portão de cemitério!');
@@ -68,7 +72,7 @@ export const Marcador = () => {
       setShowModal(true);
     }
   
-};
+  };
 
   const decreaseScore = (team) => {
     if (team === 'us' && scoreUs != 0) {
@@ -103,7 +107,10 @@ export const Marcador = () => {
 
               <View style={styles.viewInput}>
                   {[...Array(numPlayers)].map((_, index) => (
-                      <CustomTextInput key={index} placeholder={`jogador${index + 1}`} />
+                      <CustomTextInput 
+                        key={index} 
+                        value={index === 0 ? `${nome}` :  `Jogador ${index + 1}`} 
+                      />
                   ))}
               </View>
             </View>
@@ -167,26 +174,12 @@ export const Marcador = () => {
                 <Text style={styles.contador}>{matchesScoreThem}</Text>
             </View>
 
-            <Modal
+            <SaveGameModal
               visible={showModal}
-              transparent={true}
-              animationType='fade'
               onRequestClose={() => setShowModal(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Deseja salvar o jogo ou continuar jogando?</Text>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={handleSaveGame} style={[styles.modalButton, { backgroundColor: 'green' }]}>
-                                <Text style={styles.buttonText}>Salvar Jogo</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={handleContinuePlaying} style={[styles.modalButton, { backgroundColor: 'blue' }]}>
-                                <Text style={styles.buttonText}>Continuar Jogando</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
+              onSaveGame={handleSaveGame}
+              onContinuePlaying={handleContinuePlaying}
+            />
 
         </View>
     )
@@ -227,7 +220,6 @@ const styles = StyleSheet.create({
     color:'white'
   },
   marcadorView:{
-    //margin:15,
     flexDirection: 'row',
     justifyContent: 'space-around',
     color:'white'
@@ -288,36 +280,5 @@ const styles = StyleSheet.create({
     marginTop:20,
     fontSize:50,
     color: 'white'
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo opaco para indicar modal
-  },
-  modalContent: {
-      backgroundColor: '#fff', // Cor de fundo do modal
-      padding: 20,
-      borderRadius: 10,
-      alignItems: 'center',
-  },
-  modalText: {
-      marginBottom: 20,
-      textAlign: 'center',
-      fontSize: 16,
-      color: '#000', // Cor do texto dentro do modal
-  },
-  buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-  },
-  modalButton: {
-      marginHorizontal: 10,
-      padding: 10,
-      borderRadius: 5,
-  },
-  buttonText: {
-      color: '#fff', // Cor do texto dos botões
-      fontSize: 16,
   },
 });

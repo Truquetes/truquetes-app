@@ -30,6 +30,10 @@ export const Tournament = () => {
     const navigateToShuffling = () => {
         navigation.navigate('Shuffling', { teams }); // Navega para a tela de chaveamento
     };
+
+    const handleTeamSelection = (option) => {
+        option === 'S' ? 2 : 4;
+    };
     
     return(
         <View style={styles.container}>
@@ -44,7 +48,7 @@ export const Tournament = () => {
                 <Text style={styles.textTeams}> Configuração dos times </Text>
 
                 <View style={styles.teamSelectionContainer}>
-                    <TeamSelection />
+                    <TeamSelection onSelect={handleTeamSelection}/>
                     
                     <View style={styles.customTextInputContainer}>
                         <Text style={styles.textTeamNumbers}> Número de equipes </Text>

@@ -4,32 +4,14 @@ import { CustomContainer } from '../../components/CustomContainer'
 import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { ImageButton } from '../../components/ImageButton';
 import { useNavigation } from '@react-navigation/native';
-import { auth, db } from '../../database/firebaseConnection';
+import { getNomeUsuario } from '../../utils/userService';
 
 export const Main = () => {
   const navigation = useNavigation();
   const [nome, setNome] = useState('carregando...')
 
   useEffect(() => {
-
-    async function getNome() {
-      const currentUser = auth.currentUser;
-
-      if(currentUser) {
-        const userId = currentUser.uid;
-
-        await db.ref(`users/${userId}/name`).once('value', (snapshot) => {
-          if(snapshot.exists()) {
-            setNome(snapshot.val());
-          } else {
-            console.log("Nome não encontrado para o usuário atual.");
-          }
-        });
-      } else {
-        console.log("Nenhum usuário foi encontrado.");
-      }       
-    }
-    getNome();
+    getNomeUsuario(setNome)
   }, [])
 
   return (
