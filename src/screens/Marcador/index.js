@@ -6,6 +6,7 @@ import { CustomButton } from '../../components/CustomButton'
 import { TeamSelection } from '../../components/TeamSelection'
 import { SaveGameModal } from '../../components/SaveGameModal'
 import { getNomeUsuario } from '../../utils/userService';
+import { saveGame } from '../../utils/gameService';
 
 export const Marcador = () => {
   const [numPlayers, setNumPlayers] = useState(4);
@@ -17,11 +18,19 @@ export const Marcador = () => {
   const [buttonText, setButtonText] = useState('Truco!');
   const [buttonClicks, setButtonClicks] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [nome, setNome] = useState('carregando...')
+  const [nome, setNome] = useState('carregando...');
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
     getNomeUsuario(setNome)
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (nome !== 'carregando...') {
+      const initialPlayers = [nome, 'Jogador 2', 'Jogador 3', 'Jogador 4'];
+      setPlayers(initialPlayers);
+    }
+  }, [nome]);
 
   const handleTeamSelection = (option) => {
     setNumPlayers(option === 'S' ? 2 : 4);
@@ -32,7 +41,7 @@ export const Marcador = () => {
     if (buttonClicks === 0) {
       setButtonText('SEIS Poca Foia!');
       setTrucoValue(3);
-    } else if (buttonClicks  === 1) {
+    } else if (buttonClicks === 1) {
       setButtonText('NOVE Facãozeiro!');
       setTrucoValue(6);
     } else if (buttonClicks === 2) {
@@ -64,10 +73,10 @@ export const Marcador = () => {
         setScoreThem(prevScoreThem => Math.min(prevScoreThem + trucoScore, 12));
     }
 
-    if (team === 'them' && scoreThem + trucoScore === 12) {
+    if (team === 'them' && scoreThem + trucoScore >= 12) {
       setMatchesScoreThem(matchesScoreThem + 1);
       setShowModal(true);
-    } else if (team === 'us' && scoreUs + trucoScore === 12) {
+    } else if (team === 'us' && scoreUs + trucoScore >= 12) {
       setMatchesScoreUs(matchesScoreUs + 1);
       setShowModal(true);
     }
@@ -75,30 +84,38 @@ export const Marcador = () => {
   };
 
   const decreaseScore = (team) => {
-    if (team === 'us' && scoreUs != 0) {
+    if (team === 'us' && scoreUs !== 0) {
       setScoreUs(scoreUs - 1);
-    } else if (team === 'them' && scoreThem != 0) {
+    } else if (team === 'them' && scoreThem !== 0) {
       setScoreThem(scoreThem - 1);
     }
   };
 
   const handleSaveGame = () => {
-    // TODO: adicionar implementação para salvar do firebase
+    saveGame(players, scoreUs, scoreThem, nome);
     setShowModal(false);
     setScoreUs(0);
     setScoreThem(0);
   };
 
   const handleContinuePlaying = () => {
-    if ( scoreUs === 12) {
+    if (scoreUs === 12) {
       setMatchesScoreUs(matchesScoreUs - 1);
-    } else if (scoreThem === 12){
+    } else if (scoreThem === 12) {
       setMatchesScoreThem(matchesScoreThem - 1);
     }
     setShowModal(false);
   };
 
-    return (
+  const handlePlayerNameChange = (index, name) => {
+    setPlayers((prevPlayers) => {
+      const newPlayers = [...prevPlayers];
+      newPlayers[index] = name;
+      return newPlayers;
+    });
+  }
+
+  return (
         <View style={styles.container}>
             <SecondaryHeader />
 
@@ -109,7 +126,8 @@ export const Marcador = () => {
                   {[...Array(numPlayers)].map((_, index) => (
                       <CustomTextInput 
                         key={index} 
-                        value={index === 0 ? `${nome}` :  `Jogador ${index + 1}`} 
+                        value={index === 0 ? `${nome}` :  `Jogador ${index + 1}`}
+                        onChangeText={(text) => handlePlayerNameChange(index, text)}
                       />
                   ))}
               </View>
