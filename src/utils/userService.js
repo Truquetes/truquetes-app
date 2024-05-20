@@ -1,7 +1,16 @@
 import { auth, db } from '../database/firebaseConnection';
 
+let nomeUsuario = null;
+
 //Retorna o nome do usuário logado
 export async function getNomeUsuario(setNome) {
+  
+  // Verifica se o nome do usuário já foi recuperado anteriormente
+  if (nomeUsuario !== null) {
+    setNome(nomeUsuario);
+    return; // Retorna o nome armazenado sem consultar o banco de dados novamente
+  }
+
   const currentUser = auth.currentUser;
 
   if (currentUser) {
@@ -9,7 +18,9 @@ export async function getNomeUsuario(setNome) {
 
     await db.ref(`users/${userId}/name`).once('value', (snapshot) => {
       if (snapshot.exists()) {
-        setNome(snapshot.val());
+        const nome = snapshot.val();
+        nomeUsuario = nome; // Armazena o nome do usuário
+        setNome(nome);
       } else {
         console.log("Nome não encontrado para o usuário atual.");
       }
