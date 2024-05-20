@@ -23,14 +23,14 @@ export const Marcador = () => {
 
   useEffect(() => {
     getNomeUsuario(setNome)
+    setPlayers([nome])
   }, []);
 
   useEffect(() => {
     if (nome !== 'carregando...') {
-      const initialPlayers = [nome, 'Jogador 2', 'Jogador 3', 'Jogador 4'];
-      setPlayers(initialPlayers);
+      setPlayers([nome]);
     }
-  }, [nome]);
+  }, [nome]); 
 
   const handleTeamSelection = (option) => {
     setNumPlayers(option === 'S' ? 2 : 4);
@@ -91,8 +91,28 @@ export const Marcador = () => {
     }
   };
 
+  function newPlayers() {
+    let newPlayers = [];
+
+    //Manipula o array de jogadores, se caso o usuário não ter informado nenhum nome de jogador
+    for (let i = 0; i <= 3; i++) {
+      if (players[i] === null || players[i] === undefined) {
+        players[i] = 'Jogador ' + (i + 1); 
+      }
+    }
+
+    newPlayers = players; //Faz uma cópia do array
+
+    //Se for solo, pega apenas as duas primeiras posições do array
+    if (numPlayers === 2) {
+        newPlayers = players.slice(0, 2);
+    }
+
+    return newPlayers;
+  }
+
   const handleSaveGame = () => {
-    saveGame(players, scoreUs, scoreThem, nome);
+    saveGame(newPlayers(), scoreUs, scoreThem, nome);
     setShowModal(false);
     setScoreUs(0);
     setScoreThem(0);
