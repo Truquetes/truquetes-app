@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SecondaryHeader } from '../../components/SecondaryHeader';
 import { CustomButton } from '../../components/CustomButton';
 
-export const Shuffling = ({ route }) => {
+export const Shuffling = ({ route, navigation }) => {
   const { teams } = route.params;
-  const [winners, setWinners] = useState(new Array(teams.length / 2).fill(null));
+
+  // Inicialização condicional do estado winners
+  const initialWinners = teams.length > 0 ? new Array(Math.ceil(teams.length / 2)).fill(null) : [];
+  const [winners, setWinners] = useState(initialWinners);
   const [matches, setMatches] = useState(generateMatches(teams));
 
   // Lógica para gerar o chaveamento de equipes
@@ -22,17 +25,22 @@ export const Shuffling = ({ route }) => {
 
   // Manipulador de eventos para selecionar o vencedor de uma partida
   const selectWinner = (index, team) => {
-    const updatedWinners = [...winners];
-    updatedWinners[index] = team;
-    setWinners(updatedWinners);
+    const match = matches[index];
+
+    // Verifica se a equipe selecionada não é "Bye" e está presente na partida
+    if (team !== 'Bye' && (team === match.team1 || team === match.team2)) {
+      const updatedWinners = [...winners];
+      updatedWinners[index] = team;
+      setWinners(updatedWinners);
+    }
   };
 
   // Lógica para avançar para a próxima rodada após selecionar os vencedores
   const advanceRound = () => {
-    const nextRoundTeams = winners.filter(winner => winner !== null);
+    const nextRoundTeams = winners.filter(winner => winner !== null && winner !== 'Bye');
 
     if (nextRoundTeams.length !== matches.length) {
-      alert('Você deve selecionar um vencedor para cada partida.');
+      Alert.alert('Aviso', 'Você deve selecionar um vencedor para cada partida.');
       return;
     }
 
@@ -44,8 +52,25 @@ export const Shuffling = ({ route }) => {
     }
 
     setMatches(newMatches);
-    setWinners(new Array(nextRoundTeams.length / 2).fill(null));
+
+    // Verifica se sobrou apenas um time no chaveamento
+    if (newMatches.length === 1) {
+      Alert.alert('Fim do Torneio', `A equipe vencedora é: ${newMatches[0].team1}`);
+      navigation.goBack(); // Exemplo de navegação de volta após o término do torneio
+    }
+
+    // Atualização condicional do estado winners
+    const newWinners = nextRoundTeams.length > 0 ? new Array(Math.ceil(nextRoundTeams.length / 2)).fill(null) : [];
+    setWinners(newWinners);
   };
+
+  // Efeito para verificar se há apenas um vencedor final
+  useEffect(() => {
+    if (matches.length === 1 && matches[0].team2 === undefined) {
+      Alert.alert('Fim do Torneio', `A equipe vencedora é: ${matches[0].team1}`);
+      navigation.goBack(); // Exemplo de navegação de volta após o término do torneio
+    }
+  }, [matches, navigation]);
 
   return (
     <View style={styles.container}>
@@ -60,7 +85,7 @@ export const Shuffling = ({ route }) => {
           <View key={index} style={styles.matchContainer}>
             <TouchableOpacity onPress={() => selectWinner(index, match.team1)}>
               <Text style={[styles.matchText, winners[index] === match.team1 && styles.winnerText]}>
-                {match.team1}
+                {match.team1 === 'Bye' ? 'Bye' : match.team1}
               </Text>
             </TouchableOpacity>
 
@@ -68,7 +93,7 @@ export const Shuffling = ({ route }) => {
 
             <TouchableOpacity onPress={() => selectWinner(index, match.team2)}>
               <Text style={[styles.matchText, winners[index] === match.team2 && styles.winnerText]}>
-                {match.team2}
+                {match.team2 || 'Bye'}
               </Text>
             </TouchableOpacity>
           </View>
